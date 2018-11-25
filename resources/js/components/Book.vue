@@ -119,7 +119,7 @@
 		methods: {
 			clickSubmit(){
 				
-				axios.post('/api/user/books?token='+localStorage.getItem("token"), this.$data.book)
+				axios.post('/api/user/books', this.$data.book)
 					.then((response)=> {
 						console.log(response);
 						if(response.status == 200){

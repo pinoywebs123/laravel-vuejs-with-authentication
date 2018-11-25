@@ -9,9 +9,9 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 class BookController extends Controller
 {
-    // public function __construct(){
-    //     $this->middleware('auth:api');
-    // }
+    public function __construct(){
+        $this->middleware('auth:api');
+    }
 
     /**
      * Display a listing of the resource.
@@ -20,6 +20,7 @@ class BookController extends Controller
      */
     public function index()
     {
+        $user = JWTAuth::parseToken()->authenticate();
         $books = Book::all();
         return response()->json($books);
     }

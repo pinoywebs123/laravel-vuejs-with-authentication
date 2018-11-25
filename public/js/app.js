@@ -14009,18 +14009,30 @@ window.Vue = __webpack_require__(37);
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 
+axios.interceptors.request.use(function (config) {
+  var token = localStorage.getItem("token");
+
+  if (token != null) {
+    config.headers.Authorization = 'Bearer ' + token;
+  }
+
+  return config;
+}, function (err) {
+  return Promise.reject(err);
+});
+
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
-    routes: __WEBPACK_IMPORTED_MODULE_1__components_routes__["a" /* routes */],
-    mode: 'history'
+  routes: __WEBPACK_IMPORTED_MODULE_1__components_routes__["a" /* routes */],
+  mode: 'history'
 
 });
 
 var HomeApp = __webpack_require__(51);
 
 var app = new Vue({
-    el: '#app',
-    components: { HomeApp: HomeApp },
-    router: router
+  el: '#app',
+  components: { HomeApp: HomeApp },
+  router: router
 });
 
 /***/ }),
@@ -50561,7 +50573,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		clickSubmit: function clickSubmit() {
 			var _this = this;
 
-			axios.post('/api/user/books?token=' + localStorage.getItem("token"), this.$data.book).then(function (response) {
+			axios.post('/api/user/books', this.$data.book).then(function (response) {
 				console.log(response);
 				if (response.status == 200) {
 					$('#myModal').modal('hide');
