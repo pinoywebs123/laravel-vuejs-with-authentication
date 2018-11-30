@@ -50551,7 +50551,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -50567,6 +50566,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	mounted: function mounted() {
 		this.getBooks();
+		this.checkAuth();
 	},
 
 	methods: {
@@ -50623,6 +50623,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					return console.log(error);
 				});
 			} else {}
+		},
+		checkAuth: function checkAuth() {
+			var token = localStorage.getItem("token");
+			if (token == null || token == "") {
+				return false;
+			} else {
+				return true;
+			}
+		},
+		clickUpdate: function clickUpdate() {
+			var author = this.$refs.author.value;
+			var title = this.$refs.title.value;
+			var description = this.$refs.description.value;
+
+			var arr = {
+				'author': author,
+				'title': title,
+				'description': description
+			};
+			axios.patch('/api/user/books/' + this.$data.find.id, arr).then(function (response) {
+				console.log(response);
+			}).catch(function (error) {
+				return console.console(error);
+			});
 		}
 	}
 
@@ -50681,7 +50705,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-info btn-sm",
-                  attrs: { "data-toggle": "modal", "data-target": "#myModal2" },
+                  attrs: { "data-toggle": "modal", "data-target": "#myModal" },
                   on: {
                     click: function($event) {
                       _vm.clickView(love.id)
@@ -50691,16 +50715,26 @@ var render = function() {
                 [_vm._v("View")]
               ),
               _vm._v(" "),
-              _c("button", { staticClass: "btn btn-warning btn-sm" }, [
-                _vm._v("Edit")
-              ])
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-warning btn-sm",
+                  attrs: { "data-toggle": "modal", "data-target": "#myModal2" },
+                  on: {
+                    click: function($event) {
+                      _vm.clickView(love.id)
+                    }
+                  }
+                },
+                [_vm._v("Edit")]
+              )
             ])
           ])
         })
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "modal", attrs: { id: "myModal" } }, [
+    _c("div", { staticClass: "modal", attrs: { id: "myModal2" } }, [
       _c("div", { staticClass: "modal-dialog" }, [
         _c("div", { staticClass: "modal-content" }, [
           _vm._m(1),
@@ -50710,25 +50744,10 @@ var render = function() {
               _c("label", [_vm._v("Book Author")]),
               _vm._v(" "),
               _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.book.author,
-                    expression: "book.author"
-                  }
-                ],
+                ref: "author",
                 staticClass: "form-control",
                 attrs: { type: "text", id: "book_author" },
-                domProps: { value: _vm.book.author },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.book, "author", $event.target.value)
-                  }
-                }
+                domProps: { value: _vm.find.author }
               })
             ]),
             _vm._v(" "),
@@ -50736,25 +50755,10 @@ var render = function() {
               _c("label", [_vm._v("Book Title")]),
               _vm._v(" "),
               _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.book.title,
-                    expression: "book.title"
-                  }
-                ],
+                ref: "title",
                 staticClass: "form-control",
                 attrs: { type: "text", id: "book_title" },
-                domProps: { value: _vm.book.title },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.book, "title", $event.target.value)
-                  }
-                }
+                domProps: { value: _vm.find.title }
               })
             ]),
             _vm._v(" "),
@@ -50762,45 +50766,30 @@ var render = function() {
               _c("label", [_vm._v("Book Description")]),
               _vm._v(" "),
               _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.book.description,
-                    expression: "book.description"
-                  }
-                ],
+                ref: "description",
                 staticClass: "form-control",
                 attrs: { id: "book_description" },
-                domProps: { value: _vm.book.description },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.book, "description", $event.target.value)
-                  }
-                }
+                domProps: { value: _vm.find.description }
               })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { type: "button" },
+                  on: { click: _vm.clickUpdate }
+                },
+                [_vm._v("SUBMIT")]
+              )
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-footer" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button" },
-                on: { click: _vm.clickSubmit }
-              },
-              [_vm._v("Submit")]
-            )
           ])
         ])
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "modal", attrs: { id: "myModal2" } }, [
+    _c("div", { staticClass: "modal", attrs: { id: "myModal" } }, [
       _c("div", { staticClass: "modal-dialog" }, [
         _c("div", { staticClass: "modal-content" }, [
           _vm._m(2),
@@ -50861,7 +50850,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Modal Heading")]),
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Edit")]),
       _vm._v(" "),
       _c(
         "button",
@@ -50878,7 +50867,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Modal Heading")]),
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Informations")]),
       _vm._v(" "),
       _c(
         "button",
@@ -51432,8 +51421,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+	mounted: function mounted() {
+		this.checkAuth();
+	},
+
+	methods: {
+		checkAuth: function checkAuth() {
+			var token = localStorage.getItem("token");
+			if (token == null || token == "") {
+				return false;
+			} else {
+				return true;
+			}
+		},
+		userLogout: function userLogout() {
+			var _this = this;
+
+			console.log("click");
+			axios.post('api/auth/logout').then(function (response) {
+				console.log(response);
+				localStorage.removeItem("token");
+				_this.$router.push('/login');
+			}).catch(function (error) {
+				return console.log(error);
+			});
+		}
+	}
+
+});
 
 /***/ }),
 /* 60 */
@@ -51481,16 +51506,30 @@ var render = function() {
         "li",
         { staticClass: "nav-item" },
         [
-          _c(
-            "router-link",
-            {
-              staticClass: "nav-link",
-              attrs: { to: "/login", "active-class": "active" }
-            },
-            [_vm._v("Login")]
-          )
+          _vm.checkAuth()
+            ? [
+                _c(
+                  "button",
+                  { staticClass: "nav-link", on: { click: _vm.userLogout } },
+                  [_vm._v("Logout")]
+                )
+              ]
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.checkAuth()
+            ? [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "nav-link",
+                    attrs: { to: "/login", "active-class": "active" }
+                  },
+                  [_vm._v("Login")]
+                )
+              ]
+            : _vm._e()
         ],
-        1
+        2
       )
     ])
   ])

@@ -89,7 +89,13 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+       
+        $find = Book::findOrFail($book->id);
+        $find->author = $request->author;
+        $find->title = $request->title;
+        $find->description = $request->description;
+        $find->save();
+        return response()->json(['message'=> 'updated']);
     }
 
     /**
@@ -100,7 +106,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-         $book->delete();
+         //$book->delete();
          return response()->json(['message'=> 'deleted book!']);
     }
 

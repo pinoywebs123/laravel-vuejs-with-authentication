@@ -17,51 +17,13 @@
 					<td>{{love.title}}</td>
 					<td>
 						<button class="btn btn-danger btn-sm" @click="clickDelete(love.id,key)">Delete</button>
-						<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal2" @click="clickView(love.id)">View</button>
-						<button class="btn btn-warning btn-sm">Edit</button>
+						<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" @click="clickView(love.id)">View</button>
+						<button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#myModal2" @click="clickView(love.id)">Edit</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-
-		<div class="modal" id="myModal">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-
-		      <!-- Modal Header -->
-		      <div class="modal-header">
-		        <h4 class="modal-title">Modal Heading</h4>
-		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		      </div>
-
-		      <!-- Modal body -->
-		      <div class="modal-body">
-		       <div class="form-group">
-		       		<label>Book Author</label>
-		       		<input type="text" id="book_author" class="form-control" v-model="book.author">
-		       </div>
-		       <div class="form-group">
-		       		<label>Book Title</label>
-		       		<input type="text" id="book_title" class="form-control" v-model="book.title">
-		       </div>
-		       <div class="form-group">
-		       		<label>Book Description</label>
-		       		<textarea id="book_description" class="form-control" v-model="book.description">
-		       			
-		       		</textarea>
-		       </div>
-		      </div>
-
-		      <!-- Modal footer -->
-		      <div class="modal-footer">
-		        
-		        <button type="button" class="btn btn-primary" @click="clickSubmit">Submit</button>
-		      </div>
-
-		    </div>
-		  </div>
-		</div>
 
 		<div class="modal" id="myModal2">
 		  <div class="modal-dialog">
@@ -69,7 +31,44 @@
 
 		      <!-- Modal Header -->
 		      <div class="modal-header">
-		        <h4 class="modal-title">Modal Heading</h4>
+		        <h4 class="modal-title">Edit</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+
+		      <!-- Modal body -->
+		      <div class="modal-body">
+		       <div class="form-group">
+		       		<label>Book Author</label>
+		       		<input type="text" id="book_author" class="form-control"  :value="find.author" ref="author">
+		       </div>
+		       <div class="form-group">
+		       		<label>Book Title</label>
+		       		<input type="text" id="book_title" class="form-control" :value="find.title" ref="title">
+		       </div>
+		       <div class="form-group">
+		       		<label>Book Description</label>
+		       		<textarea id="book_description" class="form-control"  :value="find.description" ref="description">
+		       			
+		       		</textarea>
+		       </div>
+		       <div class="form-group">
+					<button type="button" class="btn btn-success" @click="clickUpdate">SUBMIT</button>
+		       </div>
+		      </div>
+
+		     
+
+		    </div>
+		  </div>
+		</div>
+
+		<div class="modal" id="myModal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+
+		      <!-- Modal Header -->
+		      <div class="modal-header">
+		        <h4 class="modal-title">Informations</h4>
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
 		      </div>
 
@@ -115,6 +114,7 @@
 		},
 		mounted(){
 			this.getBooks();
+			this.checkAuth();
 		},
 		methods: {
 			clickSubmit(){
@@ -165,6 +165,30 @@
 				}else{
 
 				}
+			},
+			checkAuth(){
+				const token = localStorage.getItem("token");
+				if(token == null || token == ""){
+					return false;
+				}else{
+					return true;
+				}
+
+			},
+			clickUpdate(){
+				const author = this.$refs.author.value;
+				const title = this.$refs.title.value;
+				const description = this.$refs.description.value;
+				
+				var arr = {
+					'author': author,
+					'title': title,
+					'description': description
+				}
+				axios.patch('/api/user/books/'+this.$data.find.id, arr)
+				.then((response)=> {
+					console.log(response);
+				}).catch((error)=> console.console(error));
 			}
 		}
 
