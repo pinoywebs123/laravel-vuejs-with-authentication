@@ -13,7 +13,7 @@
 		   	<template v-if="checkAuth()" >
 		   		
 		    	
-		    	<button @click="userLogout" class="nav-link">Logout</button>
+		    	<button @click="userLogout" class="nav-link btn btn-danger btn-sm">Logout</button>
 		   	</template>
 		   	<template v-if="!checkAuth()">
 		   		

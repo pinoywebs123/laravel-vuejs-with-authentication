@@ -19,6 +19,21 @@ axios.interceptors.request.use(function(config) {
 });
 
 
+
+axios.interceptors.response.use(function (response) {
+  
+    
+    return response;
+  }, function (error) {
+    if (error.response.status === 401){
+      localStorage.removeItem("token");
+      router.push('/login'); 
+      
+    }
+    return Promise.reject(error);
+  });
+
+
 const router = new VueRouter({
 	routes,
 	mode: 'history'

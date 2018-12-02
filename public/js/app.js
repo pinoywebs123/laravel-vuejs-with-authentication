@@ -14021,6 +14021,17 @@ axios.interceptors.request.use(function (config) {
   return Promise.reject(err);
 });
 
+axios.interceptors.response.use(function (response) {
+
+  return response;
+}, function (error) {
+  if (error.response.status === 401) {
+    localStorage.removeItem("token");
+    router.push('/login');
+  }
+  return Promise.reject(error);
+});
+
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
   routes: __WEBPACK_IMPORTED_MODULE_1__components_routes__["a" /* routes */],
   mode: 'history'
@@ -50551,6 +50562,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -50576,7 +50624,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.post('/api/user/books', this.$data.book).then(function (response) {
 				console.log(response);
 				if (response.status == 200) {
-					$('#myModal').modal('hide');
+					$('#myModal3').modal('hide');
 					Object.assign(_this.$data, _this.$options.data());
 					_this.getBooks();
 				}
@@ -50594,7 +50642,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					console.log(_this2.data);
 				}
 			}).catch(function (error) {
-				return console.log(error);
+				console.log(error);
 			});
 		},
 		clickView: function clickView(bookId) {
@@ -50668,7 +50716,7 @@ var render = function() {
         attrs: {
           type: "button",
           "data-toggle": "modal",
-          "data-target": "#myModal"
+          "data-target": "#myModal3"
         }
       },
       [_vm._v("\n\t  New Book\n\t")]
@@ -50734,10 +50782,110 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "modal", attrs: { id: "myModal2" } }, [
+    _c("div", { staticClass: "modal", attrs: { id: "myModal3" } }, [
       _c("div", { staticClass: "modal-dialog" }, [
         _c("div", { staticClass: "modal-content" }, [
           _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Book Author")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.author,
+                    expression: "book.author"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "book_author" },
+                domProps: { value: _vm.book.author },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.book, "author", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Book Title")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.title,
+                    expression: "book.title"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "book_title" },
+                domProps: { value: _vm.book.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.book, "title", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Book Description")]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.book.description,
+                    expression: "book.description"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "book_description" },
+                domProps: { value: _vm.book.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.book, "description", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { type: "button" },
+                  on: { click: _vm.clickSubmit }
+                },
+                [_vm._v("SUBMIT")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "modal", attrs: { id: "myModal2" } }, [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
             _c("div", { staticClass: "form-group" }, [
@@ -50792,7 +50940,7 @@ var render = function() {
     _c("div", { staticClass: "modal", attrs: { id: "myModal" } }, [
       _c("div", { staticClass: "modal-dialog" }, [
         _c("div", { staticClass: "modal-content" }, [
-          _vm._m(2),
+          _vm._m(3),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
             _c("div", { staticClass: "form-group" }, [
@@ -50843,6 +50991,23 @@ var staticRenderFns = [
       _c("th", [_vm._v("Book Title")]),
       _vm._v(" "),
       _c("th", [_vm._v("Actions")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("New Books")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      )
     ])
   },
   function() {
@@ -51510,7 +51675,10 @@ var render = function() {
             ? [
                 _c(
                   "button",
-                  { staticClass: "nav-link", on: { click: _vm.userLogout } },
+                  {
+                    staticClass: "nav-link btn btn-danger btn-sm",
+                    on: { click: _vm.userLogout }
+                  },
                   [_vm._v("Logout")]
                 )
               ]

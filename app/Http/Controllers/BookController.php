@@ -20,7 +20,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        $user = JWTAuth::parseToken()->authenticate();
+
+        
+           $user = JWTAuth::parseToken()->authenticate();
         $books = Book::all();
         return response()->json($books);
     }
@@ -106,7 +108,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-         //$book->delete();
+         $book->delete();
          return response()->json(['message'=> 'deleted book!']);
     }
 

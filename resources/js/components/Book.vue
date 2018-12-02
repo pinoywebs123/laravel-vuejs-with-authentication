@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal3">
 		  New Book
 		</button>
 		<table class="table table-response">
@@ -23,6 +23,43 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<div class="modal" id="myModal3">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+
+		      <!-- Modal Header -->
+		      <div class="modal-header">
+		        <h4 class="modal-title">New Books</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+
+		      <!-- Modal body -->
+		      <div class="modal-body">
+		       <div class="form-group">
+		       		<label>Book Author</label>
+		       		<input type="text" id="book_author" class="form-control"  v-model="book.author">
+		       </div>
+		       <div class="form-group">
+		       		<label>Book Title</label>
+		       		<input type="text" id="book_title" class="form-control" v-model="book.title">
+		       </div>
+		       <div class="form-group">
+		       		<label>Book Description</label>
+		       		<textarea id="book_description" class="form-control" v-model="book.description">
+		       			
+		       		</textarea>
+		       </div>
+		       <div class="form-group">
+					<button type="button" class="btn btn-success" @click="clickSubmit">SUBMIT</button>
+		       </div>
+		      </div>
+
+		     
+
+		    </div>
+		  </div>
+		</div>
 
 
 		<div class="modal" id="myModal2">
@@ -123,7 +160,7 @@
 					.then((response)=> {
 						console.log(response);
 						if(response.status == 200){
-							$('#myModal').modal('hide');
+							$('#myModal3').modal('hide');
 							Object.assign(this.$data, this.$options.data());
 							this.getBooks();
 						}
@@ -138,7 +175,9 @@
 							this.data = response.data;
 							console.log(this.data);
 						}
-					}).catch((error)=> console.log(error));
+					}).catch((error)=> {
+						console.log(error);
+					});
 			},
 			clickView(bookId){
 				
