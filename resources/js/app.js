@@ -3,8 +3,13 @@ window.Vue = require('vue');
 
 import VueRouter from 'vue-router';
 import {routes} from './components/routes';
+import Vuex from 'vuex';
+import storeData from './store';
 
 Vue.use(VueRouter);
+Vue.use(Vuex);
+
+const store = new Vuex.Store(storeData);
 
 axios.interceptors.request.use(function(config) {
   const token = localStorage.getItem("token");
@@ -45,5 +50,6 @@ let HomeApp = require('./components/Home.vue');
 const app = new Vue({
     el: '#app',
     components: {HomeApp},
-    router
+    router,
+    store
 });

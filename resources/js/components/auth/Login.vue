@@ -42,6 +42,7 @@
 								localStorage.setItem("token", response.data.access_token);
 								this.$router.push('/books');
 							console.log(response);
+							this.$store.state.userAuth = response.data.access_token;
 							}
 							
 						}).catch((error)=> console.log(error));

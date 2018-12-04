@@ -8,6 +8,7 @@
 				<th>Book ID</th>
 				<th>Book Author</th>
 				<th>Book Title</th>
+				<th>Date</th>
 				<th>Actions</th>
 			</thead>
 			<tbody>
@@ -15,6 +16,7 @@
 					<td>{{love.id}}</td>
 					<td>{{love.author}}</td>
 					<td>{{love.title}}</td>
+					<td>{{love.date}}</td>
 					<td>
 						<button class="btn btn-danger btn-sm" @click="clickDelete(love.id,key)">Delete</button>
 						<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" @click="clickView(love.id)">View</button>

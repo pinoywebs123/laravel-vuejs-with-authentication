@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Http\Resources\getBook;
 class BookController extends Controller
 {
     public function __construct(){
@@ -22,8 +23,8 @@ class BookController extends Controller
     {
 
         
-           $user = JWTAuth::parseToken()->authenticate();
-        $books = Book::all();
+        $user = JWTAuth::parseToken()->authenticate();
+        $books =  getBook::collection(Book::all());
         return response()->json($books);
     }
 
